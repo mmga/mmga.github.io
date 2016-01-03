@@ -58,7 +58,7 @@
 <meta property="og:site_name" content="mmga">
 <meta property="og:description" content="《Head First 设计模式》 第一章">
 <meta property="og:image" content="http://7xog6v.com1.z0.glb.clouddn.com/hexo%2Fhead_first%2F1.1.png">
-<meta property="og:updated_time" content="2016-01-03T13:55:58.982Z">
+<meta property="og:updated_time" content="2016-01-03T14:36:37.857Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="策略模式">
 <meta name="twitter:description" content="《Head First 设计模式》 第一章">
@@ -242,66 +242,15 @@
 <hr>
 <p><img src="http://7xog6v.com1.z0.glb.clouddn.com/hexo%2Fhead_first%2F1.1.png" alt="">  </p>
 <p>Duck类：</p>
-<pre><code>public abstract class Duck{
-
-    FlyBehavior flyBehavior;
-    QuackBehavior quackBehavior;
-
-    public Duck(){}
-
-    public abstract void display();
-
-    public void performFly(){
-        fylBehavior.fly();
-    }
-
-    public void performQuack(){
-        quackBehavior.quack();
-    }
-
-    public void swim(){
-        System.out.println(&quot;游啊游&quot;)
-    }
-}
-</code></pre><p>MallardDuck类：</p>
-<pre><code>public class MallardDuck extends Duck{
-
-    public MallardDuck(){
-        flyBehavior = new FlyWithWings();//飞的职责被委托给FlyWithWings对象
-        quackBehavior = new Quack();
-    }
-
-    public display(){
-        System.out.println(&quot;我是绿头鸭&quot;)
-    }
-}
-</code></pre><p>图右边的FlyBehavior接口和两个行为实现类：</p>
-<pre><code>public interface FlyBehavior{
-    public void fly();
-}
-</code></pre><hr>
-<pre><code>public class FlyWithWings implements FlyBehavior{
-    public void fly(){
-        System.out.println(&quot;我在飞&quot;);
-    }
-}
-</code></pre><hr>
-<pre><code>public class FlyNoWay implements FlyBehavior{
-    public void fly(){
-        System.out.println(&quot;我飞不了&quot;)
-    }
-}
-</code></pre><p>测试类：</p>
-<pre><code>public class MiniDuckSimulator{
-    public static void main(String[] args){
-        Duck mallard = new MallardDuck();
-        mallard.performFly();
-        //这会调用MallardDuck继承来的performQuack()方法，  
-        进而委托给该对象的QuackBehavior对象处理(也就是说，  
-        调用继承来的quackBehavior引用对象的quack())
-    }
-}
-</code></pre></span>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    FlyBehavior flyBehavior;</span><br><span class="line">	QuackBehavior quackBehavior;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Duck</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performFly</span><span class="params">()</span></span>&#123;</span><br><span class="line">		fylBehavior.fly();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performQuack</span><span class="params">()</span></span>&#123;</span><br><span class="line">		quackBehavior.quack();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swim</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"游啊游"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>MallardDuck类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MallardDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MallardDuck</span><span class="params">()</span></span>&#123;</span><br><span class="line">		flyBehavior = <span class="keyword">new</span> FlyWithWings();<span class="comment">//飞的职责被委托给FlyWithWings对象</span></span><br><span class="line">		quackBehavior = <span class="keyword">new</span> Quack();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">display</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"我是绿头鸭"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>图右边的FlyBehavior接口和两个行为实现类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">FlyBehavior</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyWithWings</span> <span class="keyword">implements</span> <span class="title">FlyBehavior</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"我在飞"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyNoWay</span> <span class="keyword">implements</span> <span class="title">FlyBehavior</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"我飞不了"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MiniDuckSimulator</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		Duck mallard = <span class="keyword">new</span> MallardDuck();</span><br><span class="line">		mallard.performFly();</span><br><span class="line">		<span class="comment">//这会调用MallardDuck继承来的performQuack()方法，  </span></span><br><span class="line">		进而委托给该对象的QuackBehavior对象处理(也就是说，  </span><br><span class="line">		调用继承来的quackBehavior引用对象的quack())</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</span>
       
     </div>
 
