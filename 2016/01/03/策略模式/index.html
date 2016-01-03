@@ -35,7 +35,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="设计模式," />
 
 
 
@@ -51,17 +51,17 @@
 
 
 
-<meta name="description" content="Hello World again">
+<meta name="description" content="《Head First 设计模式》 第一章">
 <meta property="og:type" content="article">
-<meta property="og:title" content="test">
-<meta property="og:url" content="mmga.github.io/2015/12/30/test/index.html">
+<meta property="og:title" content="策略模式">
+<meta property="og:url" content="mmga.github.io/2016/01/03/策略模式/index.html">
 <meta property="og:site_name" content="mmga">
-<meta property="og:description" content="Hello World again">
-<meta property="og:image" content="http://7xog6v.com1.z0.glb.clouddn.com/hexoc6712b466cc76a3dad0440c0d7012bc7_b.jpg">
-<meta property="og:updated_time" content="2015-12-30T02:11:19.327Z">
+<meta property="og:description" content="《Head First 设计模式》 第一章">
+<meta property="og:image" content="http://7xog6v.com1.z0.glb.clouddn.com/hexo%2Fhead_first%2F1.1.png">
+<meta property="og:updated_time" content="2016-01-03T13:55:58.982Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="test">
-<meta name="twitter:description" content="Hello World again">
+<meta name="twitter:title" content="策略模式">
+<meta name="twitter:description" content="《Head First 设计模式》 第一章">
 
 
 
@@ -73,7 +73,7 @@
   };
 </script>
 
-  <title> test | mmga </title>
+  <title> 策略模式 | mmga </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -193,7 +193,7 @@
             
             
               
-                test
+                策略模式
               
             
           </h1>
@@ -202,8 +202,8 @@
         <div class="post-meta">
           <span class="post-time">
             Posted on
-            <time itemprop="dateCreated" datetime="2015-12-30T10:08:18+08:00" content="2015-12-30">
-              2015-12-30
+            <time itemprop="dateCreated" datetime="2016-01-03T20:12:02+08:00" content="2016-01-03">
+              2016-01-03
             </time>
           </span>
 
@@ -226,26 +226,105 @@
       
 
       
-        <span itemprop="articleBody"><p>Hello World again<br><a id="more"></a></p>
-<p>有种高大上的感觉。。<br><br><img src="http://7xog6v.com1.z0.glb.clouddn.com/hexoc6712b466cc76a3dad0440c0d7012bc7_b.jpg" alt=""></p>
-</span>
+        <span itemprop="articleBody"><p>《Head First 设计模式》 第一章<br><a id="more"></a></p>
+<p>《Head First 设计模式》刚到手时翻了一下，看到小学英语课本式的插图感觉有点(⊙ｏ⊙)。昨天认真开始看才发现真是个好书，循序渐进，又不啰嗦。<br>这个读书笔记只是简单记录一下，便于以后查阅。  </p>
+<blockquote>
+<p><strong> 设计原则<br>找出应用中可能需要变化之处，把它们独立出来，不要和那些不需要变化的代码混在一起   </strong></p>
+</blockquote>
+<p>把会变化的部分取出并“封装”起来，好让其他部分不会受到影响。  </p>
+<blockquote>
+<p><strong> 针对接口编程，而不是针对实现编程。</strong></p>
+</blockquote>
+<p>“针对接口编程” 真正的意思是”针对超类型(supertype)编程”<br>可以更明确地说成“变量的声明类型应该是超类型，通常是一个抽象类或者是一个接口，如此，只要是具体实现此超类型的类所产生的对象，都可以指定给这个变量。这也意味着，声明类时不用理会以后执行时的真正对象类型”  </p>
+<blockquote>
+<p><strong> 多用组合，少用继承。  </strong></p>
+</blockquote>
+<hr>
+<p><img src="http://7xog6v.com1.z0.glb.clouddn.com/hexo%2Fhead_first%2F1.1.png" alt="">  </p>
+<p>Duck类：</p>
+<pre><code>public abstract class Duck{
+
+    FlyBehavior flyBehavior;
+    QuackBehavior quackBehavior;
+
+    public Duck(){}
+
+    public abstract void display();
+
+    public void performFly(){
+        fylBehavior.fly();
+    }
+
+    public void performQuack(){
+        quackBehavior.quack();
+    }
+
+    public void swim(){
+        System.out.println(&quot;游啊游&quot;)
+    }
+}
+</code></pre><p>MallardDuck类：</p>
+<pre><code>public class MallardDuck extends Duck{
+
+    public MallardDuck(){
+        flyBehavior = new FlyWithWings();//飞的职责被委托给FlyWithWings对象
+        quackBehavior = new Quack();
+    }
+
+    public display(){
+        System.out.println(&quot;我是绿头鸭&quot;)
+    }
+}
+</code></pre><p>图右边的FlyBehavior接口和两个行为实现类：</p>
+<pre><code>public interface FlyBehavior{
+    public void fly();
+}
+</code></pre><hr>
+<pre><code>public class FlyWithWings implements FlyBehavior{
+    public void fly(){
+        System.out.println(&quot;我在飞&quot;);
+    }
+}
+</code></pre><hr>
+<pre><code>public class FlyNoWay implements FlyBehavior{
+    public void fly(){
+        System.out.println(&quot;我飞不了&quot;)
+    }
+}
+</code></pre><p>测试类：</p>
+<pre><code>public class MiniDuckSimulator{
+    public static void main(String[] args){
+        Duck mallard = new MallardDuck();
+        mallard.performFly();
+        //这会调用MallardDuck继承来的performQuack()方法，  
+        进而委托给该对象的QuackBehavior对象处理(也就是说，  
+        调用继承来的quackBehavior引用对象的quack())
+    }
+}
+</code></pre></span>
       
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/设计模式/" rel="tag">#设计模式</a>
+          
+        </div>
       
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2015/12/30/test/" rel="next" title="test">
+                <i class="fa fa-chevron-left"></i> test
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/03/策略模式/" rel="prev" title="策略模式">
-                策略模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
