@@ -35,7 +35,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="设计模式," />
 
 
 
@@ -51,17 +51,17 @@
 
 
 
-<meta name="description" content="Hello World again">
+<meta name="description" content="《Head First 设计模式》 第三章">
 <meta property="og:type" content="article">
-<meta property="og:title" content="test">
-<meta property="og:url" content="mmga.github.io/2015/12/30/test/index.html">
+<meta property="og:title" content="装饰者模式">
+<meta property="og:url" content="mmga.github.io/2016/01/04/装饰者模式/index.html">
 <meta property="og:site_name" content="mmga">
-<meta property="og:description" content="Hello World again">
-<meta property="og:image" content="http://7xog6v.com1.z0.glb.clouddn.com/hexoc6712b466cc76a3dad0440c0d7012bc7_b.jpg">
-<meta property="og:updated_time" content="2015-12-30T02:11:19.327Z">
+<meta property="og:description" content="《Head First 设计模式》 第三章">
+<meta property="og:image" content="http://7xog6v.com1.z0.glb.clouddn.com/hexo%2Fhead_first%2F3.1.png">
+<meta property="og:updated_time" content="2016-01-04T08:27:48.506Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="test">
-<meta name="twitter:description" content="Hello World again">
+<meta name="twitter:title" content="装饰者模式">
+<meta name="twitter:description" content="《Head First 设计模式》 第三章">
 
 
 
@@ -73,7 +73,7 @@
   };
 </script>
 
-  <title> test | mmga </title>
+  <title> 装饰者模式 | mmga </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -193,7 +193,7 @@
             
             
               
-                test
+                装饰者模式
               
             
           </h1>
@@ -202,8 +202,8 @@
         <div class="post-meta">
           <span class="post-time">
             Posted on
-            <time itemprop="dateCreated" datetime="2015-12-30T10:08:18+08:00" content="2015-12-30">
-              2015-12-30
+            <time itemprop="dateCreated" datetime="2016-01-04T14:53:48+08:00" content="2016-01-04">
+              2016-01-04
             </time>
           </span>
 
@@ -226,26 +226,49 @@
       
 
       
-        <span itemprop="articleBody"><p>Hello World again<br><a id="more"></a></p>
-<p>有种高大上的感觉。。<br><br><img src="http://7xog6v.com1.z0.glb.clouddn.com/hexoc6712b466cc76a3dad0440c0d7012bc7_b.jpg" alt=""></p>
+        <span itemprop="articleBody"><p>《Head First 设计模式》 第三章<br><a id="more"></a></p>
+<p>设计原则</p>
+<blockquote>
+<p><strong> 类应该对扩展开放，对修改关闭</strong>  </p>
+</blockquote>
+<p>定义  </p>
+<blockquote>
+<p><strong> 装饰者模式动态地将责任附加到对象上。若要扩展功能，装饰者提供了比继承更有弹性的替代方案。</strong></p>
+</blockquote>
+<hr>
+<h4 id="u8BBE_u8BA1_u661F_u5DF4_u5179_u7684_u996E_u6599"><a href="#u8BBE_u8BA1_u661F_u5DF4_u5179_u7684_u996E_u6599" class="headerlink" title="设计星巴兹的饮料"></a>设计星巴兹的饮料</h4><p><img src="http://7xog6v.com1.z0.glb.clouddn.com/hexo%2Fhead_first%2F3.1.png" alt=""><br>这里我们利用继承达到“类型匹配”，而不是利用继承获得“行为”。行为来自装饰者和基础组件，或与其他装饰者之间的组合关系。</p>
+<hr>
+<h4 id="u5199_u4E0B_u661F_u5DF4_u5179_u7684_u4EE3_u7801"><a href="#u5199_u4E0B_u661F_u5DF4_u5179_u7684_u4EE3_u7801" class="headerlink" title="写下星巴兹的代码"></a>写下星巴兹的代码</h4><p>Beverage 万物之基。。<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	String description = <span class="string">"Unknown Beverage"</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> description;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">double</span> <span class="title">cost</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Condiment抽象类，也就是装饰者类<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先，必须让CondimentDecorator能够取代Beverage，所以将其扩展自Beverage类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CondimentDecorator</span> <span class="keyword">extends</span> <span class="title">Beverage</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getDescription</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>饮料的代码：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Espresso</span> <span class="keyword">extends</span> <span class="title">Beverage</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Espresso</span><span class="params">()</span></span>&#123;</span><br><span class="line">		description = <span class="string">"Espresso"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">cost</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1.99</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HouseBlend</span> <span class="keyword">extends</span> <span class="title">Beverage</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">HouseBlend</span><span class="params">()</span></span>&#123;</span><br><span class="line">		description = <span class="string">"House Blend Coffee"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">cost</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0.89</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>写调料代码： (装饰者)<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mocha</span> <span class="keyword">extends</span> <span class="title">CondimentDecorator</span></span>&#123;</span><br><span class="line">	<span class="comment">//要让Mocha能够引用一个Beverage,做法如下：</span></span><br><span class="line">	<span class="comment">//1.用一个实例变量记录饮料，也就是被装饰者</span></span><br><span class="line">	<span class="comment">//2.想办法让被装饰者(饮料)被记录到实例变量中。</span></span><br><span class="line">	<span class="comment">//这里的做法是把饮料当作构造器的参数，</span></span><br><span class="line">	<span class="comment">//再由构造器将此饮料记录在实例变量中</span></span><br><span class="line">	Beverage beverage;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Mocha</span><span class="params">(Beverage beverage)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.beverage = beverage;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> beverage.getDescription() + <span class="string">", Mocha"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">cost</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0.20</span> + beverage.cost();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Whip</span> <span class="keyword">extends</span> <span class="title">CondimentDecorator</span></span>&#123;</span><br><span class="line">Beverage beverage;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Whip</span><span class="params">(Beverage beverage)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.beverage = beverage;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> beverage.getDescription() + <span class="string">", Whip"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">cost</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0.10</span> + beverage.cost();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>供应咖啡，测试类：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StarbuzzCoffee</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Beverage beverage = <span class="keyword">new</span> Espresso();</span><br><span class="line">		System.out.println(beverage.getDescription() + <span class="string">": "</span> + beverage.cost());</span><br><span class="line">		</span><br><span class="line">		Beverage beverage2 =<span class="keyword">new</span> HouseBlend();</span><br><span class="line">		beverage2 = <span class="keyword">new</span> Mocha(beverage2);</span><br><span class="line">		beverage2 = <span class="keyword">new</span> Mocha(beverage2);</span><br><span class="line">		beverage2 = <span class="keyword">new</span> Whip(beverage2);</span><br><span class="line">		System.out.println(beverage2.getDescription()+<span class="string">": "</span>+beverage2.cost());</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 </span>
       
     </div>
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/设计模式/" rel="tag">#设计模式</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/01/04/观察者模式/" rel="next" title="观察者模式">
+                <i class="fa fa-chevron-left"></i> 观察者模式
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/03/策略模式/" rel="prev" title="策略模式">
-                策略模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -377,7 +400,7 @@
               
             
             
-              <p class="post-toc-empty">This post does not have a Table Of Contents</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#u8BBE_u8BA1_u661F_u5DF4_u5179_u7684_u996E_u6599"><span class="nav-number">1.</span> <span class="nav-text">设计星巴兹的饮料</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5199_u4E0B_u661F_u5DF4_u5179_u7684_u4EE3_u7801"><span class="nav-number">2.</span> <span class="nav-text">写下星巴兹的代码</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
