@@ -51,17 +51,16 @@
 
 
 
-<meta name="description" content="《Head First 设计模式》 第三章">
+<meta name="description" content="《Head First 设计模式》 第五章">
 <meta property="og:type" content="article">
-<meta property="og:title" content="装饰者模式">
-<meta property="og:url" content="mmga.github.io/2016/01/04/装饰者模式/index.html">
+<meta property="og:title" content="单件模式">
+<meta property="og:url" content="mmga.github.io/2016/01/06/单件模式/index.html">
 <meta property="og:site_name" content="mmga">
-<meta property="og:description" content="《Head First 设计模式》 第三章">
-<meta property="og:image" content="http://7xog6v.com1.z0.glb.clouddn.com/hexo%2Fhead_first%2F3.1.png">
-<meta property="og:updated_time" content="2016-01-04T08:27:48.506Z">
+<meta property="og:description" content="《Head First 设计模式》 第五章">
+<meta property="og:updated_time" content="2016-01-06T03:56:03.759Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="装饰者模式">
-<meta name="twitter:description" content="《Head First 设计模式》 第三章">
+<meta name="twitter:title" content="单件模式">
+<meta name="twitter:description" content="《Head First 设计模式》 第五章">
 
 
 
@@ -73,7 +72,7 @@
   };
 </script>
 
-  <title> 装饰者模式 | mmga </title>
+  <title> 单件模式 | mmga </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -193,7 +192,7 @@
             
             
               
-                装饰者模式
+                单件模式
               
             
           </h1>
@@ -202,8 +201,8 @@
         <div class="post-meta">
           <span class="post-time">
             Posted on
-            <time itemprop="dateCreated" datetime="2016-01-04T14:53:48+08:00" content="2016-01-04">
-              2016-01-04
+            <time itemprop="dateCreated" datetime="2016-01-06T11:18:40+08:00" content="2016-01-06">
+              2016-01-06
             </time>
           </span>
 
@@ -226,26 +225,19 @@
       
 
       
-        <span itemprop="articleBody"><p>《Head First 设计模式》 第三章<br><a id="more"></a></p>
-<p>设计原则</p>
-<blockquote>
-<p><strong> 类应该对扩展开放，对修改关闭</strong>  </p>
+        <span itemprop="articleBody"><p>《Head First 设计模式》 第五章<br><a id="more"></a></p>
+<p>用来创建只能有一个实例的对象。  </p>
+<h4 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h4><blockquote>
+<p><strong> 确保一个类只有一个实例，并提供一个全局访问点</strong></p>
 </blockquote>
-<p>定义  </p>
-<blockquote>
-<p><strong> 装饰者模式动态地将责任附加到对象上。若要扩展功能，装饰者提供了比继承更有弹性的替代方案。</strong></p>
-</blockquote>
-<hr>
-<h4 id="u8BBE_u8BA1_u661F_u5DF4_u5179_u7684_u996E_u6599"><a href="#u8BBE_u8BA1_u661F_u5DF4_u5179_u7684_u996E_u6599" class="headerlink" title="设计星巴兹的饮料"></a>设计星巴兹的饮料</h4><p><img src="http://7xog6v.com1.z0.glb.clouddn.com/hexo%2Fhead_first%2F3.1.png" alt=""><br>这里我们利用继承达到“类型匹配”，而不是利用继承获得“行为”。行为来自装饰者和基础组件，或与其他装饰者之间的组合关系。</p>
-<hr>
-<h4 id="u5199_u4E0B_u661F_u5DF4_u5179_u7684_u4EE3_u7801"><a href="#u5199_u4E0B_u661F_u5DF4_u5179_u7684_u4EE3_u7801" class="headerlink" title="写下星巴兹的代码"></a>写下星巴兹的代码</h4><p>Beverage 万物之基。。<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	String description = <span class="string">"Unknown Beverage"</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> description;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">double</span> <span class="title">cost</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Condiment抽象类，也就是装饰者类<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//首先，必须让CondimentDecorator能够取代Beverage，所以将其扩展自Beverage类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CondimentDecorator</span> <span class="keyword">extends</span> <span class="title">Beverage</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getDescription</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>饮料的代码：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Espresso</span> <span class="keyword">extends</span> <span class="title">Beverage</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Espresso</span><span class="params">()</span></span>&#123;</span><br><span class="line">		description = <span class="string">"Espresso"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">cost</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1.99</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HouseBlend</span> <span class="keyword">extends</span> <span class="title">Beverage</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">HouseBlend</span><span class="params">()</span></span>&#123;</span><br><span class="line">		description = <span class="string">"House Blend Coffee"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">cost</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0.89</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>写调料代码： (装饰者)<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mocha</span> <span class="keyword">extends</span> <span class="title">CondimentDecorator</span></span>&#123;</span><br><span class="line">	<span class="comment">//要让Mocha能够引用一个Beverage,做法如下：</span></span><br><span class="line">	<span class="comment">//1.用一个实例变量记录饮料，也就是被装饰者</span></span><br><span class="line">	<span class="comment">//2.想办法让被装饰者(饮料)被记录到实例变量中。</span></span><br><span class="line">	<span class="comment">//这里的做法是把饮料当作构造器的参数，</span></span><br><span class="line">	<span class="comment">//再由构造器将此饮料记录在实例变量中</span></span><br><span class="line">	Beverage beverage;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Mocha</span><span class="params">(Beverage beverage)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.beverage = beverage;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> beverage.getDescription() + <span class="string">", Mocha"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">cost</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0.20</span> + beverage.cost();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Whip</span> <span class="keyword">extends</span> <span class="title">CondimentDecorator</span></span>&#123;</span><br><span class="line">Beverage beverage;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Whip</span><span class="params">(Beverage beverage)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.beverage = beverage;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> beverage.getDescription() + <span class="string">", Whip"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">cost</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0.10</span> + beverage.cost();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>供应咖啡，测试类：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StarbuzzCoffee</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Beverage beverage = <span class="keyword">new</span> Espresso();</span><br><span class="line">		System.out.println(beverage.getDescription() + <span class="string">": "</span> + beverage.cost());</span><br><span class="line">		</span><br><span class="line">		Beverage beverage2 =<span class="keyword">new</span> HouseBlend();</span><br><span class="line">		beverage2 = <span class="keyword">new</span> Mocha(beverage2);</span><br><span class="line">		beverage2 = <span class="keyword">new</span> Mocha(beverage2);</span><br><span class="line">		beverage2 = <span class="keyword">new</span> Whip(beverage2);</span><br><span class="line">		System.out.println(beverage2.getDescription()+<span class="string">": "</span>+beverage2.cost());</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</span>
+<h4 id="u7ECF_u5178_u5355_u4EF6_u6A21_u5F0F"><a href="#u7ECF_u5178_u5355_u4EF6_u6A21_u5F0F" class="headerlink" title="经典单件模式"></a>经典单件模式</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	<span class="comment">//利用一个静态变量来记录Singleton类的唯一实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//这里是其他的有用实例化变量</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//构造器声明为私有，只有自Singleton类内才可以调用</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123;</span><br><span class="line">			uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> uniqueInstance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//这里是其他的有用方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果我们不需要这个实例，它就永远不会产生，这就是“延迟实例化”（lazy instantiaze）。<br>然而在多线程下就出问题了。。  </p>
+<h4 id="u5904_u7406_u591A_u7EBF_u7A0B"><a href="#u5904_u7406_u591A_u7EBF_u7A0B" class="headerlink" title="处理多线程"></a>处理多线程</h4><p>通过增加synchronized关键字到getInstance()方法中，我们迫使每个线程在进入这个方法之前，要先等候别的线程离开该方法。也就是说，不会有两个线程可以同时进入该方法。<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123;</span><br><span class="line">			uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> uniqueInstance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//这里是其他的有用方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然而同步会降低性能。</p>
+<h4 id="u6539_u5584_u591A_u7EBF_u7A0B"><a href="#u6539_u5584_u591A_u7EBF_u7A0B" class="headerlink" title="改善多线程"></a>改善多线程</h4><p><strong>1. 如果getInstance()的性能对应用程序不是很关键，就什么都别做</strong><br>对性能没有要求，简单直接</p>
+<p><strong>2. 使用“急切”(eagerly)创建实例，而不用延迟实例化的做法</strong><br>一定会用得到的实例，所以静态的初始化也不会浪费<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	<span class="comment">//直接创建单件，保证线程安全。</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//已经有实例了，直接使用它</span></span><br><span class="line">		<span class="keyword">return</span> uniqueInstance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>3. 双重检查锁，在getInstance()中减少使用同步</strong><br>此为牛刀，然而杀鸡焉用牛刀。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	<span class="comment">//volatile关键词确保:当uniqueInstance变量被初始化成Singleton实例时，多个线程正确地处理uniqueInstance变量。</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123; <span class="comment">//只有第一次才彻底执行这里的代码</span></span><br><span class="line">			<span class="keyword">synchronized</span> (Singleton.class)&#123;</span><br><span class="line">				<span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123; <span class="comment">//进入区块后，再检查一次。如果仍是null，才创建实例</span></span><br><span class="line">					uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> uniqueInstance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
       
     </div>
 
@@ -262,16 +254,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/04/观察者模式/" rel="next" title="观察者模式">
-                <i class="fa fa-chevron-left"></i> 观察者模式
+              <a href="/2016/01/05/工厂模式/" rel="next" title="工厂模式">
+                <i class="fa fa-chevron-left"></i> 工厂模式
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/01/05/工厂模式/" rel="prev" title="工厂模式">
-                工厂模式 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/01/06/命令模式/" rel="prev" title="命令模式">
+                命令模式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -404,7 +396,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#u8BBE_u8BA1_u661F_u5DF4_u5179_u7684_u996E_u6599"><span class="nav-number">1.</span> <span class="nav-text">设计星巴兹的饮料</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5199_u4E0B_u661F_u5DF4_u5179_u7684_u4EE3_u7801"><span class="nav-number">2.</span> <span class="nav-text">写下星巴兹的代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#u5B9A_u4E49"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u7ECF_u5178_u5355_u4EF6_u6A21_u5F0F"><span class="nav-number">2.</span> <span class="nav-text">经典单件模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5904_u7406_u591A_u7EBF_u7A0B"><span class="nav-number">3.</span> <span class="nav-text">处理多线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u6539_u5584_u591A_u7EBF_u7A0B"><span class="nav-number">4.</span> <span class="nav-text">改善多线程</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
