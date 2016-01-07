@@ -51,16 +51,17 @@
 
 
 
-<meta name="description" content="《Head First 设计模式》 第五章">
+<meta name="description" content="《Head First 设计模式》 第七章">
 <meta property="og:type" content="article">
-<meta property="og:title" content="单件模式">
-<meta property="og:url" content="mmga.github.io/2016/01/06/单件模式/index.html">
+<meta property="og:title" content="适配器模式">
+<meta property="og:url" content="mmga.github.io/2016/01/07/适配器模式/index.html">
 <meta property="og:site_name" content="mmga">
-<meta property="og:description" content="《Head First 设计模式》 第五章">
-<meta property="og:updated_time" content="2016-01-06T03:56:03.759Z">
+<meta property="og:description" content="《Head First 设计模式》 第七章">
+<meta property="og:image" content="http://7xog6v.com1.z0.glb.clouddn.com/hexo%2Fhead_first%2F7.1.png">
+<meta property="og:updated_time" content="2016-01-07T11:53:14.493Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="单件模式">
-<meta name="twitter:description" content="《Head First 设计模式》 第五章">
+<meta name="twitter:title" content="适配器模式">
+<meta name="twitter:description" content="《Head First 设计模式》 第七章">
 
 
 
@@ -72,7 +73,7 @@
   };
 </script>
 
-  <title> 单件模式 | mmga </title>
+  <title> 适配器模式 | mmga </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -192,7 +193,7 @@
             
             
               
-                单件模式
+                适配器模式
               
             
           </h1>
@@ -201,8 +202,8 @@
         <div class="post-meta">
           <span class="post-time">
             Posted on
-            <time itemprop="dateCreated" datetime="2016-01-06T11:18:40+08:00" content="2016-01-06">
-              2016-01-06
+            <time itemprop="dateCreated" datetime="2016-01-07T19:52:44+08:00" content="2016-01-07">
+              2016-01-07
             </time>
           </span>
 
@@ -225,19 +226,19 @@
       
 
       
-        <span itemprop="articleBody"><p>《Head First 设计模式》 第五章<br><a id="more"></a></p>
-<p>用来创建只能有一个实例的对象。  </p>
-<h4 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h4><blockquote>
-<p><strong> 确保一个类只有一个实例，并提供一个全局访问点</strong></p>
+        <span itemprop="articleBody"><p>《Head First 设计模式》 第七章<br><a id="more"></a></p>
+<h3 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p><strong> 适配器模式将一个类的接口，转换成客户期望的另一个接口。适配器让原本接口不兼容的类可以合作无间。</strong></p>
 </blockquote>
-<h4 id="u7ECF_u5178_u5355_u4EF6_u6A21_u5F0F"><a href="#u7ECF_u5178_u5355_u4EF6_u6A21_u5F0F" class="headerlink" title="经典单件模式"></a>经典单件模式</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	<span class="comment">//利用一个静态变量来记录Singleton类的唯一实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//这里是其他的有用实例化变量</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//构造器声明为私有，只有自Singleton类内才可以调用</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123;</span><br><span class="line">			uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> uniqueInstance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//这里是其他的有用方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果我们不需要这个实例，它就永远不会产生，这就是“延迟实例化”（lazy instantiaze）。<br>然而在多线程下就出问题了。。  </p>
-<h4 id="u5904_u7406_u591A_u7EBF_u7A0B"><a href="#u5904_u7406_u591A_u7EBF_u7A0B" class="headerlink" title="处理多线程"></a>处理多线程</h4><p>通过增加synchronized关键字到getInstance()方法中，我们迫使每个线程在进入这个方法之前，要先等候别的线程离开该方法。也就是说，不会有两个线程可以同时进入该方法。<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123;</span><br><span class="line">			uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> uniqueInstance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//这里是其他的有用方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然而同步会降低性能。</p>
-<h4 id="u6539_u5584_u591A_u7EBF_u7A0B"><a href="#u6539_u5584_u591A_u7EBF_u7A0B" class="headerlink" title="改善多线程"></a>改善多线程</h4><p><strong>1. 如果getInstance()的性能对应用程序不是很关键，就什么都别做</strong><br>对性能没有要求，简单直接</p>
-<p><strong>2. 使用“急切”(eagerly)创建实例，而不用延迟实例化的做法</strong><br>一定会用得到的实例，所以静态的初始化也不会浪费<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	<span class="comment">//直接创建单件，保证线程安全。</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//已经有实例了，直接使用它</span></span><br><span class="line">		<span class="keyword">return</span> uniqueInstance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>3. 双重检查锁，在getInstance()中减少使用同步</strong><br>此为牛刀，然而杀鸡焉用牛刀。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	<span class="comment">//volatile关键词确保:当uniqueInstance变量被初始化成Singleton实例时，多个线程正确地处理uniqueInstance变量。</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123; <span class="comment">//只有第一次才彻底执行这里的代码</span></span><br><span class="line">			<span class="keyword">synchronized</span> (Singleton.class)&#123;</span><br><span class="line">				<span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123; <span class="comment">//进入区块后，再检查一次。如果仍是null，才创建实例</span></span><br><span class="line">					uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> uniqueInstance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+<p>把一个火鸡的接口变成鸭子。</p>
+<h3 id="u8BBE_u8BA1"><a href="#u8BBE_u8BA1" class="headerlink" title="设计"></a>设计</h3><p><img src="http://7xog6v.com1.z0.glb.clouddn.com/hexo%2Fhead_first%2F7.1.png" alt=""></p>
+<h3 id="u4EE3_u7801_u5B9E_u73B0"><a href="#u4EE3_u7801_u5B9E_u73B0" class="headerlink" title="代码实现"></a>代码实现</h3><h4 id="u9E2D_u5B50"><a href="#u9E2D_u5B50" class="headerlink" title="鸭子"></a>鸭子</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Duck</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MallardDuck</span> <span class="keyword">implements</span> <span class="title">Duck</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Quack"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"I'm flying"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="u706B_u9E21"><a href="#u706B_u9E21" class="headerlink" title="火鸡"></a>火鸡</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Turkey</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">gobble</span><span class="params">()</span></span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WildTurkey</span> <span class="keyword">implements</span> <span class="title">Turkey</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">gobble</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Gobble gobble"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"I'm flying a short distance"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="u9002_u914D_u5668"><a href="#u9002_u914D_u5668" class="headerlink" title="适配器"></a>适配器</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TurkeyAdapter</span> <span class="keyword">implements</span> <span class="title">Duck</span> </span>&#123;</span><br><span class="line">	Turkey turkey;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">TurkeyAdapter</span><span class="params">(Turkey turkey)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//获取被适配的对象</span></span><br><span class="line">		<span class="keyword">this</span>.turkey = turkey;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		turkey.gobble();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">//模拟火鸡飞5次等于鸭子飞一次_ _#</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">			turkey.fly();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="u6D4B_u8BD5_u7C7B"><a href="#u6D4B_u8BD5_u7C7B" class="headerlink" title="测试类"></a>测试类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DuckTestDrive</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		MallardDuck duck = <span class="keyword">new</span> MallardDuck();</span><br><span class="line">		</span><br><span class="line">		WildTurkey turkey = <span class="keyword">new</span> WildTurkey();</span><br><span class="line">		Duck turkeyAdapter = <span class="keyword">new</span> TurkeyAdapter(turkey);</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"\nDuck说..."</span>);</span><br><span class="line">		testDuck(duck);</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"\nTurkeyAdapter说..."</span>);</span><br><span class="line">		testDuck(turkeyAdapter);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testDuck</span><span class="params">(Duck duck)</span></span>&#123;</span><br><span class="line">		duck.quack();</span><br><span class="line">		duck.fly();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</span>
       
     </div>
 
@@ -254,16 +255,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/05/工厂模式/" rel="next" title="工厂模式">
-                <i class="fa fa-chevron-left"></i> 工厂模式
+              <a href="/2016/01/06/命令模式/" rel="next" title="命令模式">
+                <i class="fa fa-chevron-left"></i> 命令模式
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/01/06/命令模式/" rel="prev" title="命令模式">
-                命令模式 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/01/07/外观模式/" rel="prev" title="外观模式">
+                外观模式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -396,7 +397,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#u5B9A_u4E49"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u7ECF_u5178_u5355_u4EF6_u6A21_u5F0F"><span class="nav-number">2.</span> <span class="nav-text">经典单件模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5904_u7406_u591A_u7EBF_u7A0B"><span class="nav-number">3.</span> <span class="nav-text">处理多线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u6539_u5584_u591A_u7EBF_u7A0B"><span class="nav-number">4.</span> <span class="nav-text">改善多线程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u5B9A_u4E49"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u8BBE_u8BA1"><span class="nav-number">2.</span> <span class="nav-text">设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4EE3_u7801_u5B9E_u73B0"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u9E2D_u5B50"><span class="nav-number">3.1.</span> <span class="nav-text">鸭子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u706B_u9E21"><span class="nav-number">3.2.</span> <span class="nav-text">火鸡</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u9002_u914D_u5668"><span class="nav-number">4.</span> <span class="nav-text">适配器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u6D4B_u8BD5_u7C7B"><span class="nav-number">5.</span> <span class="nav-text">测试类</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
