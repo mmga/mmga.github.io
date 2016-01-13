@@ -35,7 +35,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="设计模式," />
+  <meta name="keywords" content="git," />
 
 
 
@@ -51,16 +51,17 @@
 
 
 
-<meta name="description" content="《Head First 设计模式》 第五章">
+<meta name="description" content="相当零散一笔记。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="单件模式">
-<meta property="og:url" content="mmga.github.io/2016/01/06/单件模式/index.html">
+<meta property="og:title" content="git学习笔记">
+<meta property="og:url" content="mmga.github.io/2016/01/13/git学习笔记/index.html">
 <meta property="og:site_name" content="mmga">
-<meta property="og:description" content="《Head First 设计模式》 第五章">
-<meta property="og:updated_time" content="2016-01-06T03:56:03.759Z">
+<meta property="og:description" content="相当零散一笔记。">
+<meta property="og:image" content="http://7xog6v.com1.z0.glb.clouddn.com/hexo%2Fgit%2Fgit1">
+<meta property="og:updated_time" content="2016-01-13T15:10:41.553Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="单件模式">
-<meta name="twitter:description" content="《Head First 设计模式》 第五章">
+<meta name="twitter:title" content="git学习笔记">
+<meta name="twitter:description" content="相当零散一笔记。">
 
 
 
@@ -72,7 +73,7 @@
   };
 </script>
 
-  <title> 单件模式 | mmga </title>
+  <title> git学习笔记 | mmga </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -182,7 +183,7 @@
             
             
               
-                单件模式
+                git学习笔记
               
             
           </h1>
@@ -191,8 +192,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-06T11:18:40+08:00" content="2016-01-06">
-              2016-01-06
+            <time itemprop="dateCreated" datetime="2016-01-13T20:56:55+08:00" content="2016-01-13">
+              2016-01-13
             </time>
           </span>
 
@@ -215,19 +216,19 @@
       
 
       
-        <span itemprop="articleBody"><p>《Head First 设计模式》 第五章<br><a id="more"></a></p>
-<p>用来创建只能有一个实例的对象。  </p>
-<h4 id="u5B9A_u4E49"><a href="#u5B9A_u4E49" class="headerlink" title="定义"></a>定义</h4><blockquote>
-<p><strong> 确保一个类只有一个实例，并提供一个全局访问点</strong></p>
-</blockquote>
-<h4 id="u7ECF_u5178_u5355_u4EF6_u6A21_u5F0F"><a href="#u7ECF_u5178_u5355_u4EF6_u6A21_u5F0F" class="headerlink" title="经典单件模式"></a>经典单件模式</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	<span class="comment">//利用一个静态变量来记录Singleton类的唯一实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//这里是其他的有用实例化变量</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//构造器声明为私有，只有自Singleton类内才可以调用</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123;</span><br><span class="line">			uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> uniqueInstance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//这里是其他的有用方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果我们不需要这个实例，它就永远不会产生，这就是“延迟实例化”（lazy instantiaze）。<br>然而在多线程下就出问题了。。  </p>
-<h4 id="u5904_u7406_u591A_u7EBF_u7A0B"><a href="#u5904_u7406_u591A_u7EBF_u7A0B" class="headerlink" title="处理多线程"></a>处理多线程</h4><p>通过增加synchronized关键字到getInstance()方法中，我们迫使每个线程在进入这个方法之前，要先等候别的线程离开该方法。也就是说，不会有两个线程可以同时进入该方法。<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123;</span><br><span class="line">			uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> uniqueInstance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//这里是其他的有用方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然而同步会降低性能。</p>
-<h4 id="u6539_u5584_u591A_u7EBF_u7A0B"><a href="#u6539_u5584_u591A_u7EBF_u7A0B" class="headerlink" title="改善多线程"></a>改善多线程</h4><p><strong>1. 如果getInstance()的性能对应用程序不是很关键，就什么都别做</strong><br>对性能没有要求，简单直接</p>
-<p><strong>2. 使用“急切”(eagerly)创建实例，而不用延迟实例化的做法</strong><br>一定会用得到的实例，所以静态的初始化也不会浪费<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	<span class="comment">//直接创建单件，保证线程安全。</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Singleton uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//已经有实例了，直接使用它</span></span><br><span class="line">		<span class="keyword">return</span> uniqueInstance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>3. 双重检查锁，在getInstance()中减少使用同步</strong><br>此为牛刀，然而杀鸡焉用牛刀。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	<span class="comment">//volatile关键词确保:当uniqueInstance变量被初始化成Singleton实例时，多个线程正确地处理uniqueInstance变量。</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton uniqueInstance;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123; <span class="comment">//只有第一次才彻底执行这里的代码</span></span><br><span class="line">			<span class="keyword">synchronized</span> (Singleton.class)&#123;</span><br><span class="line">				<span class="keyword">if</span>(uniqueInstance == <span class="keyword">null</span>)&#123; <span class="comment">//进入区块后，再检查一次。如果仍是null，才创建实例</span></span><br><span class="line">					uniqueInstance = <span class="keyword">new</span> Singleton();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> uniqueInstance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+        <span itemprop="articleBody"><p>相当零散一笔记。<br><a id="more"></a></p>
+<p>之前一直野路子，只用Android Studio和github桌面客户端里面最基础的功能，高级点的就不敢碰了，怕把存档搞坏。。今天仔细照着-<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">廖雪峰git教程</a>-敲吧了一遍，才发现原来根本没什么神秘的嘛~这里记录下一些基本的操作，方便查询  </p>
+<p><img src="http://7xog6v.com1.z0.glb.clouddn.com/hexo%2Fgit%2Fgit1" alt="">  </p>
+<p>add, commit, status, 已敲烂。  </p>
+<p>查看：<br><code>git log</code> 可以查看提交历史，以便确定要回到哪个版本。<br><code>git log --graph</code> 可查看分支图。<br><code>git log --pretty=oneline</code> 避免看花眼。<br><code>git diff</code> 查看修改内容。<br><code>git reflog</code> 查看命令历史，以便确定要回到未来的哪个版本。  </p>
+<p>撤销：<br><code>git checkout -- &lt;name&gt;</code>把文件在工作区的修改全部撤销，就是让他回到最近一次commit或add的状态。<br><code>git reset HEAD &lt;name&gt;</code>add的逆操作，把缓存区撤销。  </p>
+<p>回退：<br><code>git reset --hard HEAD^</code> HEAD^表示上个版本，HEAD^^大上个版本，或者用git reflog查询id 直接回到某个版本。  </p>
+<p>分支相关:<br><code>git check out -b dev</code> 创建并切换到dev分支。等于下面两条指令。<br>    <code>git branch dev</code> 创建<br>    <code>git checkout dev</code> 切换<br><code>git merge dev</code> 合并dev至当前分支。FastForward模式。看不出曾经做过合并。<br><code>git merge --no-ff -m &quot;description&quot;</code> 不使用ff模式合并，merge之后能看出来曾经做过合并。<br><code>git branch -d dev</code> 删掉dev分支<br><code>git branch -D &lt;name&gt;</code> 丢弃一个没被合并的分支，强行删除。<br><code>git stash</code> 保存工作现场。修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除。当手头工作没完成时，先把工作现场<code>git stash</code>一下然后去修复bug，修复后再<code>git stash pop</code>回到工作现场。<br><code>git stash pop</code> 回到工作现场。<br>    <code>git stash apply</code> 恢复。<br>    <code>git stash drop</code> 删掉stash内容。 </p>
+<p>远程库：<br><code>git push origin master</code> 把本地master分支推送至github。<br><code>git remote add origin https://github.com/mmga/LearnGit.git</code> 关联远程库。<br><code>git push -u origin master</code> 第一次推送master分支。<br><code>git clone git@github.com:mmga/LearnGit.git</code> 克隆到本地<br><code>git remote -v</code> 查看远程库信息。<br><code>git pull</code> 从远程抓取分支。如果有冲突，要先处理冲突。<br><code>git push origin branch -&lt;name&gt;</code> 从本地推送分支，如果推送失败，先用git pull抓取远程的新提交。<br><code>git checkout -b &lt;branch-name&gt; origin/&lt;branch-name&gt;</code> 创建远程origin的分支到本地.<br><code>git branch --set -upstream &lt;branch-name&gt; origin/&lt;branch-name&gt;</code> 建立本地分支和远程分支的关联。  </p>
+<p>标签：<br><code>git tag &lt;tagname&gt;</code> 新建标签，默认为HEAD，也可以在后面置顶一个commit id。<br><code>git tag -a&lt;tagname&gt; -m &quot;description&quot;</code> 带描述。<br><code>git tag -s&lt;tagname&gt; -m &quot;description&quot;</code> 用PGP签名标签。<br><code>git tag</code> 查看所有标签。<br><code>git push origin &lt;tagname&gt;</code> 推送一个本地标签。<br><code>git push origin --tags</code> 推送所有未推过的本地标签。<br><code>git tag -d &lt;tagname&gt;</code> 删除一个本地标签。<br><code>git push origin :refs/tags/&lt;tagname&gt;</code> 删除远程标签。  </p>
+<hr>
+<p>等看了 <a href="http://git-scm.com/book/zh/v2" target="_blank" rel="external">http://git-scm.com/book/zh/v2</a> 再补充。</p>
+</span>
       
     </div>
 
@@ -235,7 +236,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/设计模式/" rel="tag">#设计模式</a>
+            <a href="/tags/git/" rel="tag">#git</a>
           
         </div>
       
@@ -244,17 +245,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/05/工厂模式/" rel="next" title="工厂模式">
-                <i class="fa fa-chevron-left"></i> 工厂模式
+              <a href="/2016/01/10/状态模式/" rel="next" title="状态模式">
+                <i class="fa fa-chevron-left"></i> 状态模式
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/06/命令模式/" rel="prev" title="命令模式">
-                命令模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -386,7 +383,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#u5B9A_u4E49"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u7ECF_u5178_u5355_u4EF6_u6A21_u5F0F"><span class="nav-number">2.</span> <span class="nav-text">经典单件模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5904_u7406_u591A_u7EBF_u7A0B"><span class="nav-number">3.</span> <span class="nav-text">处理多线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u6539_u5584_u591A_u7EBF_u7A0B"><span class="nav-number">4.</span> <span class="nav-text">改善多线程</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
